@@ -83,6 +83,7 @@ function searchRecipe(){
                 const recipeDiv = document.createElement("div");
                 recipeDiv.id = `recipeDiv-${recipe.id}`;
                 recipeDiv.className ="recipeDiv";
+                let isClicked = false;
                 recipeDiv.innerHTML = `
                     <h2>${recipe.title}</h2>
                     <img src="${recipe.image}" alt="${recipe.title}">
@@ -90,7 +91,17 @@ function searchRecipe(){
                 recipe_list.appendChild(recipeDiv);
 
                 document.querySelector(`#recipeDiv-${recipe.id}`).addEventListener("click", function(){
-                    showRecipeDetails(recipe.id);
+                    if (!isClicked){
+                        showRecipeDetails(recipe.id);
+                        isClicked = true;
+                    } else {
+                        document.querySelector(`#recipeDiv-${recipe.id}`).innerHTML=
+                        `
+                            <h2>${recipe.title}</h2>
+                            <img src="${recipe.image}" alt="${recipe.title}">
+                        `;
+                        isClicked = false;
+                    }
                 })
             })
 
@@ -116,7 +127,7 @@ function showRecipeDetails(recipeId){
 
         recipeDiv.innerHTML = `
             <h2>${data.title}</h2>
-            <img src="${data.image}" alt="${data.title}">
+        
             <p>Ready in: ${data.readyInMinutes} minutes</p>
             <p>Servings: ${data.servings}</p>
             <p>Ingredients:</p>
@@ -124,6 +135,7 @@ function showRecipeDetails(recipeId){
 
             <a href="${data.sourceUrl}" target="_blank">View Full Recipe</a>
         `;
+
     })
 }
 

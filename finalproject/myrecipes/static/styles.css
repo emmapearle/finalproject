@@ -1,0 +1,29 @@
+.recipe-list{
+    display: grid;
+    column-gap: 10px;
+    row-gap: 25px;
+    grid-template-columns: auto auto auto auto;
+    margin: 50px;
+}
+
+.recipeDiv {
+    padding: 20px;
+    border: 1px solid;
+    border-color: bisque;
+    border-radius: 15px;
+    background-color: rgb(247, 242, 235);
+    color: rgb(82, 47, 9);
+    max-width: 350px;
+}
+
+.recipeDiv img {
+    max-width: 312px;
+    max-height: 231px;
+    border-radius: 15px;
+    padding: 5px;
+}
+
+.recipeDiv h2{
+    padding-bottom: 15px;
+    
+}
