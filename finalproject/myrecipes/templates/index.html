@@ -2,7 +2,15 @@
 {% load static %}
 
 {% block body %}
-    <p>Welcome to My Cookbook!</p>
+    <h2>Welcome to My Cookbook!</h2>
+
+    <input type="text" id="search" placeholder="Find a Recipe">
+    <button id="search-button" onclick="searchRecipe()">Find Recipes</button>
+    <h3 id="recipe-header"></h3>
+
+    <div id="recipe-list" class="recipe-list">
+
+    </div>
 
 {% endblock %}
 

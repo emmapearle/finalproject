@@ -12,15 +12,21 @@ from .models import User, Recipe
 
 def index(request):
     return render(request, "index.html")
-    # # Authenticated users view their cookbook
-    # if request.user.is_authenticated:
-    #     return render(request, "index.html")
 
-    # # Everyone else is prompted to sign in
-    # else:
-    #     return HttpResponseRedirect(reverse("login"))
+def show_recipes(request):
+    recipes = Recipe.objects.all()
 
+    recipes = [recipe.serialize() for recipe in recipes]
+    return JsonResponse(recipes, safe=False)
 
+#@login_required
+# def my_recipes(request):
+    # # get recipes saved by the user
+    # recipes = Recipe.objects.filter(user=request.user)
+    
+    # return render(request, "my_recipes.html", {
+    #     "recipes": recipes
+    # })
 
 def login_view(request):
     if request.method == "POST":
