@@ -2,15 +2,32 @@
 {% load static %}
 
 {% block body %}
-    <h2>Welcome to My Cookbook!</h2>
+    <div class="bg-container">
+        <h2 id="main-head">Welcome to My Cookbook!</h2>
 
-    <input type="text" id="search" placeholder="Find a Recipe">
-    <button id="search-button" onclick="searchRecipe()">Find Recipes</button>
-    <h3 id="recipe-header"></h3>
+        <div id="search-container"> 
+            <input type="text" id="search" placeholder="Find a Recipe">
+            <button id="search-button" onclick="searchRecipe()">Find Recipes</button>
+        </div>
 
-    <div id="recipe-list" class="recipe-list">
+        <div id="filters">
+            <p>Filter By:</p>
+            <button class="category-button" onclick="filterBy('Breakfast')">Breakfast</button>
+            <button class="category-button" onclick="filterBy('Vegetarian')">Vegetarian</button>
+            <button class="category-button" onclick="filterBy('Vegan')">Vegan</button>
+            <button class="category-button" onclick="filterBy('Dessert')">Dessert</button>
+            <button class="category-button" onclick="filterBy('Seafood')">Seafood</button>
+        </div>
 
+        <h5 id="recipe-header"></h5>
+
+        <div id="recipe-list" class="recipe-list">
+
+        </div>
+
+        <div id="random-recipe"></div>
     </div>
+
 
 {% endblock %}
 

@@ -13,23 +13,28 @@
     <body>
 
         
-        <nav class="navbar navbar-expand-lg navbar-light bg-light">
-            <a class="navbar-brand" href="#">My Cookbook</a>
+        <nav class="navbar sticky-top navbar-expand-lg navbar-dark" style="background-color: rgb(182, 133, 68);">
+            <a class="navbar-brand" id="app-name" href="{% url 'index' %}">My Cookbook</a>
           
             <div>
               <ul class="navbar-nav mr-auto">
 
-                <li class="nav-item">
+                <!-- <li class="nav-item">
                   <a class="nav-link" href="{% url 'index' %}">All Recipes</a>
-                </li>
+                </li> -->
                 <li class="nav-item">
                     <a class="nav-link" onclick="getRandom()">Surprise Me!</a>
                 </li>
                 {% if user.is_authenticated %}
 
                     <li class="nav-item">
-                        <a class="nav-link" id = "my-recipes">My Recipes</a>
+                        <a class="nav-link" id ="my-recipes" href="{% url 'my_recipes' %}">My Recipes</a>
                     </li>
+
+                    <li class="nav-item">
+                        <a class="nav-link" href="{% url 'create' %}">Create Recipe</a>
+                    </li>
+
                     
                     <li id="logout" class="nav-item">
                         <a class="nav-link" href="{% url 'logout' %}">Log Out</a>

@@ -1,9 +1,115 @@
+body, html{
+    min-height: 100%;
+
+}
+
+.bg-container {
+    /* height: 100vh; */
+    /* background-image: url("pixel_bg_1.svg"); */
+    background-image: linear-gradient( rgba(255, 255, 255, 0.658)), url("pixel_bg_1.svg");
+    background-repeat: repeat;
+    background-attachment: fixed;
+    /* background-size: cover; */
+}
+
+.bg-container h2{
+    text-align: center;
+    padding: 2%;
+    font-weight: bolder;
+    color: rgb(82, 47, 9);
+    font-size: 3em; 
+}
+
+.login-form{
+    display: block;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    width: 50%;
+    background-color: bisque;
+    border-radius: 10%;
+    padding: 10px;
+}
+
+#app-name{
+    padding: 10px;
+}
+
+#search-container{
+    display: block;
+    justify-content: center;
+    text-align: center;
+}
+
+#search-container input{
+    width: 40%;
+    padding: 1vh;
+    border-radius: 10px;
+    background-color: blanchedalmond;
+    border: 0.5px solid pink;
+    box-shadow: 0 0 2px rgb(204, 146, 155);
+    margin: 2%;
+}
+
+#search-button{
+    border-radius: 10vh;
+    background-color: brown;
+    color: wheat;
+    font-weight: 500;
+    border: 2px solid palevioletred;
+    padding: 0.75vh 5vh;
+}
+
+#filters {
+    text-align: center;
+    margin: 2%;
+}
+
+#filters p{
+    font-style: italic;
+    font-weight: 500;
+    color: brown;
+}
+
+.category-button{
+    margin: auto;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    display: inline-flex;
+    border-radius: 10vh;
+    padding: 0.35% 3%;
+    background-color: rgb(255, 255, 254);
+    border: 0.25px solid burlywood;
+    box-shadow: inset 0 0 1px rgb(204, 146, 155), 0 0 1px rgb(255, 207, 214);
+}
+
+.category-button:hover{
+    background-color: rgb(255, 207, 214);
+    box-shadow: inset 0 0 2px rgb(204, 146, 155), 0 0 1px rgb(255, 255, 254);
+}
+
+.category-button:active{
+    background-color: rgb(255, 217, 242);
+    border: 0.4px solid brown;
+    box-shadow: inset 0 0 1px rgb(204, 146, 155), 0 0 1px rgb(255, 207, 214);
+}
+
 .recipe-list{
     display: grid;
-    column-gap: 10px;
+    align-items: center;
     row-gap: 25px;
     grid-template-columns: auto auto auto auto;
-    margin: 50px;
+    margin: 30px;
+}
+
+#recipe-header{
+    text-align: center;
+    padding: 1%;
+    font-style: italic;    
+    color: rgb(82, 47, 9);
+    margin: auto;
+    width: 50%;
 }
 
 .recipeDiv {
@@ -14,6 +120,12 @@
     background-color: rgb(247, 242, 235);
     color: rgb(82, 47, 9);
     max-width: 350px;
+    min-height: 350px;
+}
+
+.recipeDiv:hover{
+    box-shadow: 2px 2px 2px rgb(209, 158, 87), 2px 2px 2px white;
+    
 }
 
 .recipeDiv img {
@@ -25,5 +137,24 @@
 
 .recipeDiv h2{
     padding-bottom: 15px;
-    
+
 }
+
+#create-form{
+    display: block;
+    justify-content: center;
+    margin: 5vh auto;
+    padding: 7vh;
+    width: 60%;
+    background-color: antiquewhite;
+    border-radius: 10vh;
+}
+
+#random-recipe{
+    background-color: antiquewhite;
+    border-radius: 10vh;
+    width: 75%;
+    padding: 5vh;
+    margin: auto;
+}
+
