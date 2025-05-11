@@ -9,7 +9,7 @@ from django.shortcuts import HttpResponse, HttpResponseRedirect, render
 from django.urls import reverse
 from django.views.decorators.csrf import csrf_exempt
 
-from .models import User, Recipe
+from .models import User, Recipe, Pantry
 
 class CreateRecipe(forms.ModelForm):
     class Meta:
@@ -47,26 +47,6 @@ def new_recipe(request):
         if form.is_valid():
             form.save()
             return render(request, "recipes.html", {"recipes": recipes})
-        
-# use json or py?        
-# data = json.loads(request.body)
-
-#         title = data.get("title", "")
-#         ingredients = data.get("ingredients", "")
-#         instructions = data.get("instructions", "")
-
-#         if title == "" or ingredients == "" or instructions == "":
-#             return JsonResponse({"error": "All fields are required."}, status=400)
-#         else:
-#             recipe = Recipe(
-                
-#                 title=title,
-#                 ingredients=ingredients,
-#                 instructions=instructions
-#             )
-#             recipe.save()
-#             return render(request, "index.html", {"message": "Recipe created successfully."})
-# #
 
 
 def get_recipe(request, recipe_id):
@@ -80,7 +60,9 @@ def get_recipe(request, recipe_id):
     # return render(request, "recipe.html", {
     #         "this_recipe": recipe, "recipe_id": recipe_id
     #     }) 
-    return JsonResponse(recipe.serialize(), safe=False)
+    recipe = recipe.serialize()
+    return render(request, "fullrecipe.html", {"recipe":recipe})
+    # return JsonResponse(recipe.serialize(), safe=False)
 
 @login_required
 def my_recipes(request):
@@ -91,6 +73,33 @@ def my_recipes(request):
     return render(request, "recipes.html", {
         "recipes": recipes
     })
+
+@login_required
+def view_pantry(request):
+    return render(request, "pantry.html")
+
+@login_required
+@csrf_exempt
+def add_to_pantry(request, ing_id):
+
+    #take the ingredient id and add to user's pantry model
+    data = json.loads(request.body)
+    ingredientId= ing_id;
+
+    print(data, ": data")
+    ingredient = data.get("name")
+
+    userPantry = Pantry(user=request.user)
+    userPantry.ingredientsbyId.append(ingredientId)
+
+    pantry=userPantry.ingredients
+    pantry.append(ingredient)
+    
+    print("pantry:" ,pantry)
+    userPantry.save()
+
+    return JsonResponse({'message': 'Ingredient data received '}, status=200)
+    
 
 def login_view(request):
     if request.method == "POST":

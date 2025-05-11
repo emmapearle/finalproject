@@ -36,9 +36,35 @@ class Recipe(models.Model):
         return {
             "id": self.id,
             "title":self.title,
+            "image":self.image,
             "description":self.description,
             "ingredients":self.ingredients,
             "instructions":self.instructions,
             "category":self.category,
             "isClicked":self.isClicked
         }
+
+class Pantry(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="pantry")
+    ingredients = models.JSONField(default=list, blank=True)
+    ingredientsbyId = models.JSONField(default=list, blank=True)
+    # ingredients = models.ManytoManyField(null=True, blank=True, related_name="ingredients", on_delete=models.CASCADE)
+    # inPantry = models.BooleanField(default=False)
+
+    def __str__(self):
+        return f"{self.user}'s Groceries: {self.ingredients}"
+    
+    def serialize(self):
+        return {
+            "id": self.id,
+            "user": self.user.username,
+            "ingredients": self.ingredients,
+            "ingredientsbyId": self.ingredientsbyId
+        }
+
+
+class Ingredients(models.Model):
+    item = models.CharField(max_length=200)
+
+    def __str__(self):
+        return self.item

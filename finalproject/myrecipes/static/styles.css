@@ -4,8 +4,7 @@ body, html{
 }
 
 .bg-container {
-    /* height: 100vh; */
-    /* background-image: url("pixel_bg_1.svg"); */
+    min-height: 100vh;
     background-image: linear-gradient( rgba(255, 255, 255, 0.658)), url("pixel_bg_1.svg");
     background-repeat: repeat;
     background-attachment: fixed;
@@ -35,13 +34,13 @@ body, html{
     padding: 10px;
 }
 
-#search-container{
+.search-container{
     display: block;
     justify-content: center;
     text-align: center;
 }
 
-#search-container input{
+.search-container input{
     width: 40%;
     padding: 1vh;
     border-radius: 10px;
@@ -51,7 +50,7 @@ body, html{
     margin: 2%;
 }
 
-#search-button{
+.search-button{
     border-radius: 10vh;
     background-color: brown;
     color: wheat;
@@ -158,3 +157,35 @@ body, html{
     margin: auto;
 }
 
+#view-recipe{
+    margin:2vh 25vh;
+    padding: 5vh 15vh;
+    background-color: blanchedalmond;
+    border-radius: 10vh;
+}
+
+#view-recipe img{
+    border-radius:10vh;
+    margin: auto;
+    margin-bottom: 3vh;
+    width: 30%;
+    max-width: 50%;
+    display: block;
+}
+
+#ing-list{
+    display: grid;
+    grid-template-columns: auto auto auto auto auto;
+    margin: 10vh;
+}
+
+.ingDiv{
+    background-color: rgba(255, 255, 255, 0.832);
+    border-radius: 1vh;
+    width: fit-content;
+    margin: 1vh;
+    padding: 1vh 3vh;
+    text-align: center;
+    border: 1px solid brown;
+
+}

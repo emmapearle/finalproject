@@ -1,6 +1,12 @@
 document.addEventListener("DOMContentLoaded", function(){
     index();
 
+    document.querySelector('#filters').style.display="block";
+
+    document.querySelector('#search-container').style.display="block";
+
+    document.querySelector('#recipe-header').innerHTML="";
+
 })
 
 const myHeader ={
@@ -263,51 +269,52 @@ function showMealDetails(recipeId){
     })
 }
 
-//Show recipe details from user-created recipes (from models, not from public API)
-function showDetails(recipeId){
+// //Show recipe details from user-created recipes (from models, not from public API)
+// function showDetails(recipeId){
     
-    // myrecipeDiv.addEventListener("click", showDetails(recipeId));
+//     // myrecipeDiv.addEventListener("click", showDetails(recipeId));
 
-    console.log('clicked', recipeId);
+//     console.log('clicked', recipeId);
 
-    fetch(`/my_recipes/${recipeId}`)
-    .then((response) => (response.json()))
-    .then((recipe) => {
-        let isclicked = recipe.isClicked;
-        const myrecipeDiv = document.getElementById(`myrecipeDiv-${recipeId}`);
+//     fetch(`/my_recipes/${recipeId}`)
+//     .then((response) => (response.json()))
+//     .then((recipe) => {
+//         let isclicked = recipe.isClicked;
+//         const myrecipeDiv = document.getElementById(`myrecipeDiv-${recipeId}`);
 
     
-        if (isclicked===false){
+//         // if (isclicked===false){
 
-            console.log('if', recipe.isClicked);
-            recipe.isClicked=true;
+        //     console.log('if', recipe.isClicked);
+        //     recipe.isClicked=true;
 
-            myrecipeDiv.innerHTML = `
-            <a onclick="showDetails('${recipe.id}');">
-                    <h2>${recipe.title}</h2>
-                    <img src="${recipe.image}" alt="${recipe.title}">
-                    <p>Ingredients:</p>
-                    <ul>${recipe.ingredients}</ul> 
-                </a>
-            `;
-            console.log('end if', recipe.isClicked);
-            console.log(recipe);
+        //     myrecipeDiv.innerHTML = `
+        //     <a onclick="showDetails('${recipe.id}');">
+        //             <h2>${recipe.title}</h2>
+                    
+        //             <p>Ingredients:</p>
+        //             <ul>${recipe.ingredients}</ul> 
+        //         </a>
+        //     `;
+        //     console.log('end if', recipe.isClicked);
+        //     console.log('recipe id', recipe.id);
+        //     exit;
 
-        } else if (isclicked===true) {
-            console.log('else');
-            recipe.isClicked=false;
+        // } else if (isclicked===true) {
+        //     console.log('else');
+        //     recipe.isClicked=false;
 
-            myrecipeDiv.innerHTML = `
-                <a onclick="showDetails('${recipe.id}');">
-                    <h2>${recipe.title}</h2>
-                    <img src="${recipe.image}" alt="${recipe.title}">
-                </a>
-            `;
+        //     myrecipeDiv.innerHTML = `
+        //         <a onclick="showDetails('${recipe.id}');">
+        //             <h2>${recipe.title}</h2>
+        //             <img src="${recipe.image}" alt="${recipe.title}">
+        //         </a>
+        //     `;
 
-        }
-    });
-    // });
-}
+//         // }
+//     });
+//     // });
+// }
 
 function filterBy(category){
     const recipe_list= document.getElementById('recipe-list');
@@ -355,5 +362,120 @@ function filterBy(category){
         })
 
        
+    });
+}
+
+
+function addtoFavorites(recipeId){
+    const recipeDiv = document.getElementById(`recipeDiv-${recipeId}`);
+
+    const recipeData = {
+        id: recipeId,
+        title: recipeTitle,
+        image: recipeImage
+    };
+
+    fetch("/add_to_favorites", {
+        method: "POST",
+        headers: myHeader,
+        body: JSON.stringify(recipeData)
+    })
+    .then((response) => response.json())
+    .then((data) => {
+        console.log(data.message);
+    });
+}
+
+
+//Search ingredients from Spoonacular API
+function searchIngredients(){
+    const searchQuery = document.getElementById("search-ing").value;
+    const url =`https://api.spoonacular.com/food/ingredients/search?query=${searchQuery}&number=10&addChildren=true&apiKey=02ba26bf19de45318b79c306fb550f93`;
+    const ing_list = document.getElementById("ing-list");
+
+    if (searchQuery===""){
+        alert("Search field cannot be empty!");
+    } else {
+
+        fetch(url, {
+            headers: myHeader
+        })
+        .then((response) => (response.json()))
+        .then((data) => {
+            console.log(data);
+
+            if (data.results.length===0){
+                ing_list.innerHTML=`<h4>No results found for "${searchQuery}"</h4>`;
+            } else {
+
+                document.getElementById("add-pantry").innerHTML=`Showing Search Results for "${searchQuery}"`;
+                ing_list.innerHTML="";
+
+                const ingredients = data.results;
+                console.log(ingredients);
+
+                ingredients.forEach((ing) => {
+                    const ingDiv = document.createElement("div");
+                    ingDiv.id = `ingDiv-${ing.id}`;
+                    ingDiv.className ="ingDiv";
+                    let isClicked = false;
+                    ingDiv.innerHTML = `
+                        <h4>${ing.name}</h4> 
+                    `;
+                    ing_list.appendChild(ingDiv);
+                    
+                    document.querySelector(`#ingDiv-${ing.id}`).addEventListener("click", function(){
+
+
+                        fetch(`add/${ing.id}`,{
+                            method: "POST",
+                            headers:{
+                                'Content-Type': 'application/json'
+                            },
+                            body: JSON.stringify(ing)
+                        })
+                        .then((response) => (response.json()))
+                        .then((data) => {
+                            console.log(body);
+                            console.log(data);
+                        });
+                        // if (!inPantry){
+                        //     //addtoPantry(ing.id);
+
+                        //     fetch(`add_to_pantry/${ing.id}`)
+                        //     .then((response) => (response.json()))
+                        //     .then((data) => {
+                        //         console.log(data);
+                        //     });
+
+                        // } else {
+                        //     removefromPantry(ing.id);
+                        // }
+                    });
+                });
+
+           }
+        });
+    }
+}
+
+
+function addtoPantry(ingredientId){
+    const ingDiv = document.getElementById(`ingDiv-${ingredientId}`);
+
+    const pantryItem = {
+        id: ingredientId,
+        name: ingredientName,
+        image: ingredientImage
+    };
+
+    fetch("/add_to_pantry", {
+        method: "POST",
+        headers:{ 'Content-Type': 'application/json'},
+        body: JSON.stringify(ingredientData)
+    })
+    .then((response) => response.json())
+    .then((data) => {
+        console.log(data.message);
     });
 }
