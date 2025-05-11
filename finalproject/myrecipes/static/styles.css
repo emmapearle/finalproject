@@ -118,25 +118,46 @@ body, html{
     border-radius: 15px;
     background-color: rgb(247, 242, 235);
     color: rgb(82, 47, 9);
-    max-width: 350px;
-    min-height: 350px;
+    max-width: 300px;
+    height: 300px;
 }
 
 .recipeDiv:hover{
     box-shadow: 2px 2px 2px rgb(209, 158, 87), 2px 2px 2px white;
-    
+    animation: both 0.5s ease-in-out;
+    transform: scale(1.05);
 }
 
 .recipeDiv img {
-    max-width: 312px;
-    max-height: 231px;
+    max-width: 275px;
+    max-height: 150px;
     border-radius: 15px;
     padding: 5px;
+    margin: auto;
+    overflow: hidden;
+    display: block;
 }
 
 .recipeDiv h2{
     padding-bottom: 15px;
+    font-size: 1.5em;
+}
 
+.recipeDiv p, ul{
+    text-overflow: ellipsis;
+    overflow: hidden;
+    white-space: nowrap;
+}
+
+.recipeDiv h5{
+    font-size: 1em ;
+    padding: 3px 0;
+}
+
+.recipeDiv a{
+    color: rgb(106, 86, 198);
+    font-style: italic;
+    font-weight: 600;
 }
 
 #create-form{
@@ -155,6 +176,7 @@ body, html{
     width: 75%;
     padding: 5vh;
     margin: auto;
+    display: none;
 }
 
 #view-recipe{

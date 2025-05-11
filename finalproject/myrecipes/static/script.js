@@ -1,12 +1,6 @@
 document.addEventListener("DOMContentLoaded", function(){
     index();
 
-    document.querySelector('#filters').style.display="block";
-
-    document.querySelector('#search-container').style.display="block";
-
-    document.querySelector('#recipe-header').innerHTML="";
-
 })
 
 const myHeader ={
@@ -97,18 +91,52 @@ function index(){
         });
         
     });
-}
+} 
 
 
 //Get random recipe from Spoonacular API
 function getRandom(){
 
-    document.querySelector('#filters').style.display="none";
-    document.querySelector('#search-container').style.display="none";
-    document.querySelector('#main-head').innerHTML="Bon Appetit!";
-    document.querySelector('#recipe-header').innerHTML="";
-    document.getElementById("recipe-list").innerHTML="";
+    //elements will vary depending on the page; check for elements and change their displays to none
 
+    if(document.querySelector('#filters')){
+        document.querySelector('#filters').style.display="none";
+    }
+
+    if (document.querySelector('#search-container')){
+        document.querySelector('#search-container').style.display="none";
+    }
+
+    if (document.querySelector('#main-head')){
+        document.querySelector('#main-head').innerHTML="Bon Appetit!";
+    }
+     
+    if (document.querySelector('#recipe-header')){
+        document.querySelector('#recipe-header').innerHTML="";
+    }
+
+    if (document.querySelector("#recipe-list")){
+        document.querySelector("#recipe-list").innerHTML="";
+    }
+
+    if (document.querySelector('#create-form')){
+        document.querySelector('#create-form').style.display="none";
+    }
+
+    if(document.querySelector('#view-recipe')){
+        document.querySelector('#view-recipe').style.display="none";
+    }
+
+    if (document.querySelector('#myrecipe-title')){
+        document.querySelector('#myrecipe-title').style.display="none";
+    }
+
+    if (document.getElementById('my-recipe-list')){
+        document.getElementById('my-recipe-list').innerHTML="";
+    }
+
+
+    //fetch random recipe data from spoonacular API
     fetch("https://api.spoonacular.com/recipes/random?apiKey=02ba26bf19de45318b79c306fb550f93", {
         headers: myHeader
     })
@@ -117,6 +145,7 @@ function getRandom(){
     .then((data) => {
 
         const targetDiv = document.getElementById("random-recipe");
+        targetDiv.style.display="block";
         targetDiv.innerHTML="";
 
         recipe = data.recipes[0];
@@ -233,10 +262,10 @@ function showRecipeDetails(recipeId){
         recipeDiv.innerHTML = `
             <h2>${data.title}</h2>
         
-            <p>Ready in: ${data.readyInMinutes} minutes</p>
-            <p>Servings: ${data.servings}</p>
-            <p>Ingredients:</p>
-            <ul>${ingredientList}</ul> 
+            <h5>Ready in: ${data.readyInMinutes} minutes</h5>
+            <h5>Servings: ${data.servings}</h5>
+            <h5>Ingredients:</h5>
+            <p><ul>${ingredientList}</ul></p>
 
             <a href="${data.sourceUrl}" target="_blank">View Full Recipe</a>
             <a href="addtoFavorites(${data.id},${data.title})>Favorite</a>
@@ -253,22 +282,15 @@ function showMealDetails(recipeId){
         recipe = data.meals[0];
 
         const recipeDiv = document.getElementById(`recipeDiv-${recipeId}`);
-        // const ingredientList = [];
-
-        // for (let i=0; i<data.extendedIngredients.length; i++){
-        //     const ingredient = data.extendedIngredients[i].original;
-        //     ingredientList.push(ingredient);
-        // }
 
         recipeDiv.innerHTML = `
             <h2>${recipe.strMeal}</h2>
-            <p>Category: ${recipe.strCategory}</p>
+            <h5>Category: ${recipe.strCategory}</h5>
 
-            <p>Instructions:</p>
+            <h5>Instructions:</h5>
             <p>${recipe.strInstructions}</p>
 
             <a href="${recipe.strSource}" target="_blank">View Full Recipe</a>
-            <img src="static/heart.png" id="favorite" onclick="addtoFavorites(${recipe.idMeal},'${recipe.strMeal}')">
         `;
     })
 }
@@ -277,6 +299,7 @@ function filterBy(category){
     const recipe_list= document.getElementById('recipe-list');
         
     recipe_list.innerHTML="";
+    document.querySelector('#recipe-header').innerHTML=`Showing ${category} Recipes`;
 
     fetch(`https://www.themealdb.com/api/json/v1/1/filter.php?c=${category}`)
     .then((response) => (response.json()))
@@ -317,27 +340,6 @@ function filterBy(category){
 
     });
 }
-
-
-function addtoFavorites(recipeId, recipeTitle){
-   // const recipeDiv = document.getElementById(`recipeDiv-${recipeId}`);
-
-    const recipeData = {
-        id: recipeId,
-        title: recipeTitle
-    };
-
-    fetch(`/favorite/${recipeId}`, {
-        method: "POST",
-        headers: myHeader,
-        body: JSON.stringify(recipeData)
-    })
-    .then((response) => response.json())
-    .then((data) => {
-        console.log(data.message);
-    });
-}
-
 
 //Search ingredients from Spoonacular API
 function searchIngredients(){

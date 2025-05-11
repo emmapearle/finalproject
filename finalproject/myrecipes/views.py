@@ -99,18 +99,6 @@ def add_to_pantry(request, ing_id):
 
     return JsonResponse({'message': 'Ingredient data received '}, status=200)
 
-@login_required
-@csrf_exempt
-def favorite(request, recipe_id):
-    # Add recipe to user's favorites
-    data = json.loads(request.body)
-    recipe_id = data.get("id")
-    
-    user = request.user
-    user.favorites.add(recipe_id)
-    user.save()
-
-    return JsonResponse({"message": "Recipe added to favorites."}, status=200)    
 
 def login_view(request):
     if request.method == "POST":

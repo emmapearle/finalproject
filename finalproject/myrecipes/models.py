@@ -25,7 +25,6 @@ class Recipe(models.Model):
         max_length=50,
         choices=cat_choices, null=True, blank=True
     )
-    isClicked = models.BooleanField(default=False)
 
     def __str__(self):
         return self.title
@@ -39,7 +38,6 @@ class Recipe(models.Model):
             "ingredients":self.ingredients,
             "instructions":self.instructions,
             "category":self.category,
-            "isClicked":self.isClicked
         }
 
 class Pantry(models.Model):
