@@ -12,7 +12,13 @@ Whether the user is or is not logged in, they can peruse the recipe database at 
 About the Design:
 From a design standpoint, I wanted to the website to be enticing and fun, giving a sense of warmth and safety. To achieve this, I leaned towards warm beiges and browns, rounded corners, and subtle shadows, along with the fun pixel at background for more character. I'd wanted to add more pixel food elements and icons as well throughout, but found it a bit difficult to integrate into elements consistently. For future development, I may consider using pixel art images as the filter buttons, similarly to the style of Airbnb's homepage filters. 
 
-Create:
-To integrate more user functionality, I added the option to add their own recipe to their account using Django models and forms. Keeping the same design tone as previously stated, the create page allows for easy addition to the user's recipe book, accessed in the My Recipes tab of the navbar.
+The recipe divs are laid out in a grid, allowing users to view more information about the recipe simply by clicking the div. This grid-style layout adds to the playfulness of the website while making browsing fast and easy. 
+
+Create / My Recipes:
+To integrate more user functionality, I added the option to add their own recipe to their account using Django models and forms. Keeping the same design tone as previously stated, the create page allows for easy addition to the user's recipe book, accessed in the My Recipes tab of the navbar. Each recipe created by the user is also directed to its own recipe page once clicked on, displaying its full list of instructions, ingredients, and more. 
+
+Unlike the homepage's recipe divs, these divs do not change internally to  show more information, but instead redirect the user to a completely different page. This was a result of a compromise following issues arising when attempting to alter the div's innerHTML. I'd assumed there would not be much difficulty in switching back and forth between the model Recipes and the public API recipes, but there was difficulty in going between Python and Javascript, as some of the attributes accessed in the JS functions were in the public APIs, but not in the model.
+
+Additionally, I'd wanted to challenge myself and experiment a bit with going between Python urls and using Javascript to edit a single page, especially as I had noticed in previous projects the lag time for loading the website when I accomplished all front-end changes in Javascript only. Because of this, I came across some errors when going between views.py to script.js and back to the HTML page. While progress was being made in debugging the issues, time unfortunately did not permit for further exploration, and a compromise had to be made.
 
  a full write-up describing your project, what’s contained in each file you created, why you made certain design decisions, and any other additional information the staff should know about your project. This document should be sufficiently thorough for your teaching fellow to run your project without any need to contact you further with questions.
