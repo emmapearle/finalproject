@@ -19,7 +19,6 @@ class Recipe(models.Model):
     title = models.CharField(max_length=255, null=True, blank=False)
     description = models.TextField(null=True, blank=True)
     image = models.URLField(null=True, blank=False)
-    #servings = models.IntegerField()
     ingredients = models.TextField(null=True, blank=False)
     instructions = models.TextField(null=True, blank=False)
     category = models.CharField(
@@ -27,7 +26,6 @@ class Recipe(models.Model):
         choices=cat_choices, null=True, blank=True
     )
     isClicked = models.BooleanField(default=False)
-    # creator = models.ForeignKey(User, on_delete=models.CASCADE, related_name="cooks")
 
     def __str__(self):
         return self.title
@@ -45,7 +43,7 @@ class Recipe(models.Model):
         }
 
 class Pantry(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="pantry")
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="mypantry")
     ingredients = models.JSONField(default=list, blank=True)
     ingredientsbyId = models.JSONField(default=list, blank=True)
     # ingredients = models.ManytoManyField(null=True, blank=True, related_name="ingredients", on_delete=models.CASCADE)
@@ -57,7 +55,6 @@ class Pantry(models.Model):
     def serialize(self):
         return {
             "id": self.id,
-            "user": self.user.username,
             "ingredients": self.ingredients,
             "ingredientsbyId": self.ingredientsbyId
         }

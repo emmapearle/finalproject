@@ -239,6 +239,7 @@ function showRecipeDetails(recipeId){
             <ul>${ingredientList}</ul> 
 
             <a href="${data.sourceUrl}" target="_blank">View Full Recipe</a>
+            <a href="addtoFavorites(${data.id},${data.title})>Favorite</a>
         `;
 
     })
@@ -261,67 +262,20 @@ function showMealDetails(recipeId){
 
         recipeDiv.innerHTML = `
             <h2>${recipe.strMeal}</h2>
+            <p>Category: ${recipe.strCategory}</p>
 
-            // <p>Ingredients:</p>
+            <p>Instructions:</p>
+            <p>${recipe.strInstructions}</p>
 
-            <a href="${recipe.strYoutube}" target="_blank">View Full Recipe</a>
+            <a href="${recipe.strSource}" target="_blank">View Full Recipe</a>
+            <img src="static/heart.png" id="favorite" onclick="addtoFavorites(${recipe.idMeal},'${recipe.strMeal}')">
         `;
     })
 }
 
-// //Show recipe details from user-created recipes (from models, not from public API)
-// function showDetails(recipeId){
-    
-//     // myrecipeDiv.addEventListener("click", showDetails(recipeId));
-
-//     console.log('clicked', recipeId);
-
-//     fetch(`/my_recipes/${recipeId}`)
-//     .then((response) => (response.json()))
-//     .then((recipe) => {
-//         let isclicked = recipe.isClicked;
-//         const myrecipeDiv = document.getElementById(`myrecipeDiv-${recipeId}`);
-
-    
-//         // if (isclicked===false){
-
-        //     console.log('if', recipe.isClicked);
-        //     recipe.isClicked=true;
-
-        //     myrecipeDiv.innerHTML = `
-        //     <a onclick="showDetails('${recipe.id}');">
-        //             <h2>${recipe.title}</h2>
-                    
-        //             <p>Ingredients:</p>
-        //             <ul>${recipe.ingredients}</ul> 
-        //         </a>
-        //     `;
-        //     console.log('end if', recipe.isClicked);
-        //     console.log('recipe id', recipe.id);
-        //     exit;
-
-        // } else if (isclicked===true) {
-        //     console.log('else');
-        //     recipe.isClicked=false;
-
-        //     myrecipeDiv.innerHTML = `
-        //         <a onclick="showDetails('${recipe.id}');">
-        //             <h2>${recipe.title}</h2>
-        //             <img src="${recipe.image}" alt="${recipe.title}">
-        //         </a>
-        //     `;
-
-//         // }
-//     });
-//     // });
-// }
-
 function filterBy(category){
     const recipe_list= document.getElementById('recipe-list');
-  //  const categoryButton = document.querySelector(`.categoryFilter`)
-    
-    console.log(category);
-    
+        
     recipe_list.innerHTML="";
 
     fetch(`https://www.themealdb.com/api/json/v1/1/filter.php?c=${category}`)
@@ -361,21 +315,19 @@ function filterBy(category){
 
         })
 
-       
     });
 }
 
 
-function addtoFavorites(recipeId){
-    const recipeDiv = document.getElementById(`recipeDiv-${recipeId}`);
+function addtoFavorites(recipeId, recipeTitle){
+   // const recipeDiv = document.getElementById(`recipeDiv-${recipeId}`);
 
     const recipeData = {
         id: recipeId,
-        title: recipeTitle,
-        image: recipeImage
+        title: recipeTitle
     };
 
-    fetch("/add_to_favorites", {
+    fetch(`/favorite/${recipeId}`, {
         method: "POST",
         headers: myHeader,
         body: JSON.stringify(recipeData)

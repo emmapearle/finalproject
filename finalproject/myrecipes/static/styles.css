@@ -189,3 +189,8 @@ body, html{
     border: 1px solid brown;
 
 }
+
+#favorite{
+    max-width: 40px;
+    align-self: right;
+}

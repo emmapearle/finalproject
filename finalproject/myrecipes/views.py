@@ -66,8 +66,7 @@ def get_recipe(request, recipe_id):
 
 @login_required
 def my_recipes(request):
-    # get recipes saved by the user
-    # recipes = Recipe.objects.filter(user=request.user)
+    # get recipes made by the user
     recipes = Recipe.objects.all()
     
     return render(request, "recipes.html", {
@@ -99,7 +98,19 @@ def add_to_pantry(request, ing_id):
     userPantry.save()
 
     return JsonResponse({'message': 'Ingredient data received '}, status=200)
+
+@login_required
+@csrf_exempt
+def favorite(request, recipe_id):
+    # Add recipe to user's favorites
+    data = json.loads(request.body)
+    recipe_id = data.get("id")
     
+    user = request.user
+    user.favorites.add(recipe_id)
+    user.save()
+
+    return JsonResponse({"message": "Recipe added to favorites."}, status=200)    
 
 def login_view(request):
     if request.method == "POST":
