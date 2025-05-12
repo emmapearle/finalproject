@@ -9,6 +9,9 @@ https://spoonacular.com/food-api/
 
 GitHub: https://github.com/emmapearle/finalproject
 
+Youtube Presentation: https://youtu.be/QROOvfv1K54
+
+
 Home Page: 
 
 Whether the user is or is not logged in, they can peruse the recipe database at their leisure. The home page greets the visitor with the option to search for meals, filter by the categories shown, or scroll to browse. For the code, I pulled from two different recipe APIs- Spoonacular API and MealDB API. I began with Spoonacular but soon discovered that there is a maximum of 10 items shown in every resulting array, and was unable to find a straightforward route to display a list of recipes on the homepage. Thus, MealDB provided the solution. Although MealDB also did not have a route that allowed for the display of all recipes in the database, I was able to use the API route to list recipes by alphabet order. For simplicity for the sake of the project, I only loaded recipes from letters A and B, which is why all the recipes are currently only beginning with A or B, but I will be considering continuing to add more in the future and observing the effect of adding more recipes on the subsequent load times. 
