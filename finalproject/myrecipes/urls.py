@@ -5,7 +5,6 @@ from . import views
 
 urlpatterns = [
     path("", views.index, name="index"),
-    # path("admin/", admin.site.urls),
     path("login/", views.login_view, name="login"),
     path("logout/", views.logout_view, name="logout"),
     path("register/",views.register, name="register"),
@@ -13,6 +12,4 @@ urlpatterns = [
     path("my_recipes/", views.my_recipes, name="my_recipes"),
 
     path("my_recipes/<int:recipe_id>", views.get_recipe, name="myrecipe"),
-    path("pantry/", views.view_pantry, name="pantry"),
-    path("pantry/add/<int:ing_id>", views.add_to_pantry, name="add_to_pantry"),
-]
+ ]

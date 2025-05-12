@@ -52,17 +52,12 @@ def new_recipe(request):
 def get_recipe(request, recipe_id):
     try:
         recipe = Recipe.objects.get(pk=recipe_id)
-        print(recipe, ":in get recipe")
         
     except Recipe.DoesNotExist:
         return JsonResponse({"error": "Recipe not found."}, status=404)
 
-    # return render(request, "recipe.html", {
-    #         "this_recipe": recipe, "recipe_id": recipe_id
-    #     }) 
     recipe = recipe.serialize()
     return render(request, "fullrecipe.html", {"recipe":recipe})
-    # return JsonResponse(recipe.serialize(), safe=False)
 
 @login_required
 def my_recipes(request):
@@ -73,80 +68,6 @@ def my_recipes(request):
         "recipes": recipes
     })
 
-@login_required
-def view_pantry(request):
-    return render(request, "pantry.html")
-
-@login_required
-@csrf_exempt
-def add_to_pantry(request, ing_id):
-
-    #take the ingredient id and add to user's pantry model
-    data = json.loads(request.body)
-    ingredientId= ing_id;
-
-    print(data, ": data")
-    ingredient = data.get("name")
-
-    userPantry = Pantry(user=request.user)
-    userPantry.ingredientsbyId.append(ingredientId)
-
-    pantry=userPantry.ingredients
-    pantry.append(ingredient)
-    
-    print("pantry:" ,pantry)
-    userPantry.save()
-
-    return JsonResponse({'message': 'Ingredient data received '}, status=200)
-
-# @login_required
-# @csrf_exempt
-# def favorite_recipe(request):
-#     if request.method == "POST":
-#         data = json.loads(request.body)
-#         recipe_id = data.get("recipe_id")
-#         recipe_title = data.get("title")
-
-#         if not recipe_id or not recipe_title:
-#             return JsonResponse({"error": "Recipe ID and title are required."}, status=400)
-
-#         user = request.user
-#         favorites = user.profile.favorites or []
-
-#         # Check if the recipe is already favorited
-#         if any(fav.get("recipe_id") == recipe_id for fav in favorites):
-#             return JsonResponse({"message": "Recipe already favorited."}, status=400)
-
-#         # Add the recipe to the user's favorites
-#         favorites.append({"recipe_id": recipe_id, "title": recipe_title})
-#         user.profile.favorites = favorites
-#         user.profile.save()
-
-#         return JsonResponse({"message": "Recipe favorited successfully."}, status=200)
-
-#     elif request.method == "DELETE":
-#         data = json.loads(request.body)
-#         recipe_id = data.get("recipe_id")
-
-#         if not recipe_id:
-#             return JsonResponse({"error": "Recipe ID is required."}, status=400)
-
-#         user = request.user
-#         favorites = user.profile.favorites or []
-
-#         # Check if the recipe is in the user's favorites
-#         updated_favorites = [fav for fav in favorites if fav.get("recipe_id") != recipe_id]
-
-#         if len(favorites) == len(updated_favorites):
-#             return JsonResponse({"message": "Recipe not in favorites."}, status=400)
-
-#         # Update the user's favorites
-#         user.profile.favorites = updated_favorites
-#         user.profile.save()
-
-#         return JsonResponse({"message": "Recipe unfavorited successfully."}, status=200)
-
-#     return JsonResponse({"error": "Invalid request method."}, status=400)
 
 
 def login_view(request):

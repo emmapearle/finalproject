@@ -58,7 +58,6 @@ function index(){
         fetch("https://www.themealdb.com/api/json/v1/1/search.php?f=b")
         .then((response) => (response.json()))
         .then((data) => {
-            console.log(data);  
             const recipes = data.meals;
 
             recipes.forEach((recipe) => {
@@ -199,7 +198,6 @@ function searchRecipe(){
         })
         .then((response) => (response.json()))
         .then((data) => {
-            console.log(data);
 
             if (data.results.length===0){
                 recipe_list.innerHTML=`<h4>No results found for "${searchQuery}"</h4>`;
@@ -249,7 +247,6 @@ function showRecipeDetails(recipeId){
     })
     .then((response) => (response.json()))
     .then((data) => {
-        console.log(data);
 
         const recipeDiv = document.getElementById(`recipeDiv-${recipeId}`);
         const ingredientList = [];
@@ -305,7 +302,6 @@ function filterBy(category){
     .then((response) => (response.json()))
     .then((data) => {
        recipes = data.meals;
-       console.log(recipes);
 
        recipes.forEach((recipe) => {
             const recipeDiv = document.createElement("div");
@@ -341,7 +337,9 @@ function filterBy(category){
     });
 }
 
-//Search ingredients from Spoonacular API
+
+//Search ingredients from Spoonacular API -- Note: This was made for testing the in development Pantry feature, not the search bar.
+//  Please feel free to disregard this function for the time being.
 function searchIngredients(){
     const searchQuery = document.getElementById("search-ing").value;
     const url =`https://api.spoonacular.com/food/ingredients/search?query=${searchQuery}&number=10&addChildren=true&apiKey=02ba26bf19de45318b79c306fb550f93`;
@@ -414,22 +412,3 @@ function searchIngredients(){
 }
 
 
-function addtoPantry(ingredientId){
-    const ingDiv = document.getElementById(`ingDiv-${ingredientId}`);
-
-    const pantryItem = {
-        id: ingredientId,
-        name: ingredientName,
-        image: ingredientImage
-    };
-
-    fetch("/add_to_pantry", {
-        method: "POST",
-        headers:{ 'Content-Type': 'application/json'},
-        body: JSON.stringify(ingredientData)
-    })
-    .then((response) => response.json())
-    .then((data) => {
-        console.log(data.message);
-    });
-}
