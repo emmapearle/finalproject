@@ -7,6 +7,8 @@ Public APIs:
 https://www.themealdb.com/api.php
 https://spoonacular.com/food-api/
 
+GitHub: https://github.com/emmapearle/finalproject
+
 Home Page: 
 
 Whether the user is or is not logged in, they can peruse the recipe database at their leisure. The home page greets the visitor with the option to search for meals, filter by the categories shown, or scroll to browse. For the code, I pulled from two different recipe APIs- Spoonacular API and MealDB API. I began with Spoonacular but soon discovered that there is a maximum of 10 items shown in every resulting array, and was unable to find a straightforward route to display a list of recipes on the homepage. Thus, MealDB provided the solution. Although MealDB also did not have a route that allowed for the display of all recipes in the database, I was able to use the API route to list recipes by alphabet order. For simplicity for the sake of the project, I only loaded recipes from letters A and B, which is why all the recipes are currently only beginning with A or B, but I will be considering continuing to add more in the future and observing the effect of adding more recipes on the subsequent load times. 
@@ -31,3 +33,8 @@ Surprise Me!
 The Surpise Me page retrieves a random recipe from the Spoonacular API recipe database and displays it to the user. This page can be accessed even when a user is not logged in with an account. 
 
 The code uses a basic fetch request to obtain and display a random recipe. As the code was originally created assuming the user was navigating to the page from index.html, the code begins with setting the current displays of HTML elements to none and accessing the innerHTML of the div "random-recipe." However, as testing continued, the user was unable to navigate to the surprise me page from other webpages such as recipes.html or create.html due to the modified HTML elements not being present. While it could have been made so that the Surprise Me button was only visible on the home page, I wanted to keep it in the global navbar, and so had to make modifications to the Javascript in order to check what HTML elements were present on the page, as well as add the necessary divs to all the html scripts.
+
+
+Future Modifications
+
+A sizeable part of my ideal result for the project was to allow users to (1) favorite and save recipes to their own "recipe box" and (2) add grocery items to their "pantry" that would allow them to multiselect and filter meals based on what they already have at home. While I made it about halfway through both of these features, I kept coming across errors that were taking longer than desired to solve, and so in the interest of time, I shifted focus to ensuring that the current website UI and layout was presentable and aligned as desired. I fully intend to continue working on these features with the hope that I'll be able to successfully implement them with a longer time frame outside of the semester. Some of my previous attempts can be viewed on my GitHub. 
