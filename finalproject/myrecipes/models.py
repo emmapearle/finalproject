@@ -40,26 +40,26 @@ class Recipe(models.Model):
             "category":self.category,
         }
 
-class Pantry(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="mypantry")
-    ingredients = models.JSONField(default=list, blank=True)
-    ingredientsbyId = models.JSONField(default=list, blank=True)
-    # ingredients = models.ManytoManyField(null=True, blank=True, related_name="ingredients", on_delete=models.CASCADE)
-    # inPantry = models.BooleanField(default=False)
+# class Pantry(models.Model):
+#     user = models.ForeignKey(User, on_delete=models.CASCADE, related_name="mypantry")
+#     ingredients = models.JSONField(default=list, blank=True)
+#     ingredientsbyId = models.JSONField(default=list, blank=True)
+#     # ingredients = models.ManytoManyField(null=True, blank=True, related_name="ingredients", on_delete=models.CASCADE)
+#     # inPantry = models.BooleanField(default=False)
 
-    def __str__(self):
-        return f"{self.user}'s Groceries: {self.ingredients}"
+#     def __str__(self):
+#         return f"{self.user}'s Groceries: {self.ingredients}"
     
-    def serialize(self):
-        return {
-            "id": self.id,
-            "ingredients": self.ingredients,
-            "ingredientsbyId": self.ingredientsbyId
-        }
+#     def serialize(self):
+#         return {
+#             "id": self.id,
+#             "ingredients": self.ingredients,
+#             "ingredientsbyId": self.ingredientsbyId
+#         }
 
 
-class Ingredients(models.Model):
-    item = models.CharField(max_length=200)
+# class Ingredients(models.Model):
+#     item = models.CharField(max_length=200)
 
-    def __str__(self):
-        return self.item
+#     def __str__(self):
+#         return self.item
